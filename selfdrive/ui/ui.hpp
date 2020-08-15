@@ -32,13 +32,20 @@
 #define NET_DISCONNECTED 1
 #define NET_ERROR 2
 
-#define COLOR_BLACK nvgRGBA(0, 0, 0, 255)
-#define COLOR_BLACK_ALPHA(x) nvgRGBA(0, 0, 0, x)
-#define COLOR_WHITE nvgRGBA(255, 255, 255, 255)
-#define COLOR_WHITE_ALPHA(x) nvgRGBA(255, 255, 255, x)
-#define COLOR_YELLOW nvgRGBA(218, 202, 37, 255)
-#define COLOR_RED nvgRGBA(201, 34, 49, 255)
-#define COLOR_OCHRE nvgRGBA(218, 111, 37, 255)
+# define COLOR_BLACK nvgRGBA(0, 0, 0, 255)
+# define COLOR_BLACK_ALPHA(x) nvgRGBA(0, 0, 0, x)
+# define COLOR_WHITE nvgRGBA(255, 255, 255, 255)
+# define COLOR_WHITE_ALPHA(x) nvgRGBA(255, 255, 255, x)
+# define COLOR_OCHRE nvgRGBA(218, 111, 37, 255)
+# define COLOR_OCHRE_ALPHA(x) nvgRGBA(218, 111, 37, x)
+# define COLOR_GREEN nvgRGBA(0, 255, 0, 255)
+# define COLOR_GREEN_ALPHA(x) nvgRGBA(0, 255, 0, x)
+# define COLOR_ORANGE nvgRGBA(255, 175, 3, 255)
+# define COLOR_ORANGE_ALPHA(x) nvgRGBA(255, 175, 3, x)
+# define COLOR_RED nvgRGBA(201, 34, 49, 255)
+# define COLOR_RED_ALPHA(x) nvgRGBA(201, 34, 49, x)
+# define COLOR_YELLOW nvgRGBA(218, 202, 37, 255)
+# define COLOR_YELLOW_ALPHA(x) nvgRGBA(218, 202, 37, x)
 
 #ifndef QCOM
   #define UI_60FPS
@@ -83,8 +90,8 @@ const int SET_SPEED_NA = 255;
 const uint8_t bg_colors[][4] = {
   [STATUS_STOPPED] = {0x07, 0x23, 0x39, 0xff},
   [STATUS_DISENGAGED] = {0x17, 0x33, 0x49, 0xff},
-  [STATUS_ENGAGED] = {0x17, 0x86, 0x44, 0xff},
-  [STATUS_WARNING] = {0xDA, 0x6F, 0x25, 0xff},
+  [STATUS_ENGAGED] = {0x17, 0x86, 0x44, 0x0f},
+  [STATUS_WARNING] = {0xDA, 0x6F, 0x25, 0x0f},
   [STATUS_ALERT] = {0xC9, 0x22, 0x31, 0xff},
 };
 
@@ -111,11 +118,36 @@ typedef struct UIScene {
   int ui_viz_rx;
   int ui_viz_rw;
   int ui_viz_ro;
+  
+  int lead_status;
+  float lead_d_rel, lead_y_rel, lead_v_rel;
+
+  int lead_status2;
+  float lead_d_rel2, lead_y_rel2, lead_v_rel2;
 
   std::string alert_text1;
   std::string alert_text2;
   std::string alert_type;
   cereal::ControlsState::AlertSize alert_size;
+  // ui add
+  bool rightblindspot;
+  bool leftblindspot;
+  bool leftBlinker;
+  bool rightBlinker;
+  int blinker_blinkingrate;
+  float angleSteers;
+  float steerRatio;
+  bool brakeLights;
+  float angleSteersDes;
+  bool steerOverride;
+  float output_scale; 
+  float cpu0Temp;
+  int batteryPercent;
+  bool batteryCharging;
+  char batteryStatus[64];
+  // ip addr
+  char ipAddr[20];
+  
 
   cereal::HealthData::HwType hwType;
   int satelliteCount;
@@ -161,6 +193,7 @@ typedef struct UIState {
   int img_turn;
   int img_face;
   int img_map;
+  int img_brake;
   int img_button_settings;
   int img_button_home;
   int img_battery;
@@ -226,6 +259,7 @@ typedef struct UIState {
   bool alert_blinked;
   bool started;
   bool vision_seen;
+  bool livempc_or_radarstate_changed;
 
   std::atomic<float> light_sensor;
 

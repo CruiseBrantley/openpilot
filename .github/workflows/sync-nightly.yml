@@ -1,0 +1,26 @@
+name: Sync Prebuilts from Nightly
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync:
+    name: Sync
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+          # token: ${{ secrets.PAT_TOKEN }} # Required if pushing to a different repo or bypassing branch protection
+
+      - name: Run Sync Script
+        run: |
+          chmod +x sync_prebuilt.sh
+          ./sync_prebuilt.sh
+        env:
+          GIT_LFS_SKIP_PUSH: 1 # Standardize with the local script's behavior

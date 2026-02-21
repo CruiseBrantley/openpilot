@@ -5,8 +5,8 @@ PREBUILT_BRANCH="ioniq-5-firestar-prebuilt"
 
 # Set git identity for CI
 if [ -z "$(git config user.email)" ]; then
-    git config user.email "cruise.brantley@gmail.com"
-    git config user.name "Cruise Brantley"
+    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    git config user.name "github-actions[bot]"
 fi
 
 # Ensure commaai remote exists

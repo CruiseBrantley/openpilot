@@ -24,7 +24,7 @@ git checkout -f -B $PREBUILT_BRANCH commaai/nightly
 echo "[3/4] Applying Ioniq 5 tuning..."
 sed -i 's/^KP = 0.8$/KP = 0.5/'    selfdrive/controls/lib/latcontrol_torque.py
 sed -i 's/^KI = 0.15$/KI = 0.25/'  selfdrive/controls/lib/latcontrol_torque.py
-sed -i 's/^FRICTION_THRESHOLD = 0.2$/FRICTION_THRESHOLD = 0.3/' opendbc_repo/opendbc/car/lateral.py
+sed -i 's/^FRICTION_THRESHOLD = 0.2$/FRICTION_THRESHOLD = 0.275/' opendbc_repo/opendbc/car/lateral.py
 sed -i 's/^"HYUNDAI_IONIQ_5" = \[3.172929, 2.713050, 0.096019\]$/"HYUNDAI_IONIQ_5" = [3.172929, 2.713050, 0.093138]/' opendbc_repo/opendbc/car/torque_data/params.toml
 
 # 3. Commit and push

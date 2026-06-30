@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from opendbc.car import structs, rate_limit, DT_CTRL, ACCELERATION_DUE_TO_GRAVITY
 from opendbc.car.vehicle_model import VehicleModel
 
-FRICTION_THRESHOLD = 0.2
+FRICTION_THRESHOLD = 0.275
 
 # - ISO 11270
 ISO_LATERAL_ACCEL = 3.0  # m/s^2
